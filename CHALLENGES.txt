@@ -1,0 +1,270 @@
+LET’S GO 🔥
+Here’s a proper challenge sheet:
+Real operations (mv, rm, mkdir)
+NO answers in the challenge section
+Hints only
+Full solutions at the bottom
+Do not scroll to solutions until you’re done 😄
+
+🧪 SHELL SCRIPTING CHALLENGES
+
+Focus: if, else, for, while, file ops
+
+🧱 SETUP (DO THIS ONCE)
+mkdir shell_challenges
+cd shell_challenges
+touch a.txt b.txt c.log d.log image.png script.sh data.csv
+
+🧩 CHALLENGE 1 — File Existence Check Task
+
+Write a script that:
+Checks if a.txt exists
+If it exists → move it to backup/
+If not → print File not found
+Rules
+Must use if
+Must not error if folder doesn’t exist
+
+Hints
+-f
+mkdir -p
+mv
+
+🧩 CHALLENGE 2 — Conditional Folder Creation Task
+
+Create a script that:
+Checks if a folder named logs exists
+If not → create it
+If yes → print logs already exists
+
+Hints
+-d
+if [ ! ... ]
+
+🧩 CHALLENGE 3 — Extension Filter Task
+
+Your script receives one filename as argument
+If file ends in .log → move to logs/
+Otherwise → print Not a log file
+Run like
+./script.sh d.log
+
+Hints
+$1
+[[ ]]
+*.log
+
+🧩 CHALLENGE 4 — Bulk File Organizer Task
+
+Using one for loop:
+Move .txt → txt/
+Move .log → log/
+Move .png → img/
+Ignore everything else
+
+Rules
+Use for
+Use if / elif
+Folder must auto-create
+
+Hints
+for file in *
+mkdir -p
+elif
+
+🧩 CHALLENGE 5 — Safe Delete Task
+
+Ask user: Delete all .log files? (y/n)
+If yes → delete
+If no → cancel
+
+Hints
+read
+rm
+string comparison
+
+🧩 CHALLENGE 6 — Rename with Counter Task
+
+Rename all .txt files into:
+
+doc_1.txt
+doc_2.txt
+doc_3.txt
+
+Rules
+Use a counter variable
+Use for
+
+Hints
+i=1
+((i++))
+
+🧩 CHALLENGE 7 — While Loop Processor Task
+
+Put all .log filenames into a text file
+Use a while loop to read each line
+Move each file to logs/
+
+Hints
+ls
+while read
+input redirection <
+
+🧩 CHALLENGE 8 — Countdown Script Task
+
+Print:
+Starting in 5
+Starting in 4
+...
+GO!
+
+Rules
+Use while
+Use arithmetic comparison
+
+Hints
+-gt
+sleep
+decrement
+
+🧩 CHALLENGE 9 — Menu-Based Script
+Task
+
+Create a menu that loops forever:
+1) List files
+2) Move .txt
+3) Exit
+
+Rules
+Must use while true
+Must use if / elif
+Must stop on exit
+
+Hints
+break
+read choice
+
+🧩 CHALLENGE 10 — Smart Organizer (Boss Level)
+Task
+
+Loop through everything in the directory:
+If it’s a file
+Sort by extension
+Skip folders
+Print what was skipped
+
+Hints
+-f
+nested if
+echo "Skipped $file"
+
+---------------------------------------------------------------------
+
+✅ SOLUTIONS (DON’T LOOK TOO EARLY 😏)
+✅ Solution 1
+if [ -f a.txt ]; then
+  mkdir -p backup
+  mv a.txt backup/
+else
+  echo "File not found"
+fi
+
+✅ Solution 2
+if [ ! -d logs ]; then
+  mkdir logs
+else
+  echo "logs already exists"
+fi
+
+✅ Solution 3
+FILE=$1
+
+if [[ $FILE == *.log ]]; then
+  mkdir -p logs
+  mv "$FILE" logs/
+else
+  echo "Not a log file"
+fi
+
+✅ Solution 4
+mkdir -p txt log img
+
+for file in *; do
+  if [[ $file == *.txt ]]; then
+    mv "$file" txt/
+  elif [[ $file == *.log ]]; then
+    mv "$file" log/
+  elif [[ $file == *.png ]]; then
+    mv "$file" img/
+  fi
+done
+
+✅ Solution 5
+echo "Delete all .log files? (y/n)"
+read answer
+
+if [ "$answer" = "y" ]; then
+  rm *.log
+else
+  echo "Cancelled"
+fi
+
+✅ Solution 6
+i=1
+for f in *.txt; do
+  mv "$f" "doc_$i.txt"
+  ((i++))
+done
+
+✅ Solution 7
+ls *.log > list.txt
+
+while read file; do
+  mkdir -p logs
+  mv "$file" logs/
+done < list.txt
+
+✅ Solution 8
+count=5
+
+while [ $count -gt 0 ]; do
+  echo "Starting in $count"
+  sleep 1
+  ((count--))
+done
+
+echo "GO!"
+
+✅ Solution 9
+while true; do
+  echo "1) List files"
+  echo "2) Move .txt"
+  echo "3) Exit"
+  read choice
+
+  if [ "$choice" = "1" ]; then
+    ls
+  elif [ "$choice" = "2" ]; then
+    mkdir -p txt
+    mv *.txt txt/
+  elif [ "$choice" = "3" ]; then
+    break
+  else
+    echo "Invalid"
+  fi
+done
+
+✅ Solution 10
+for file in *; do
+  if [ -f "$file" ]; then
+    if [[ $file == *.txt ]]; then
+      mkdir -p txt
+      mv "$file" txt/
+    elif [[ $file == *.log ]]; then
+      mkdir -p log
+      mv "$file" log/
+    else
+      echo "Skipped $file"
+    fi
+  fi
+done

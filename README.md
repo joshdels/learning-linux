@@ -44,3 +44,7 @@ ping google.com
 ifconfig                    # or: ip addr
 curl url
 wget url
+
+### Weater
+curl wttr.in/Tagum
+![Weather Linux](./Projects/14-weather/weather.png)

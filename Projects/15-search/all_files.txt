@@ -1,0 +1,4 @@
+./all_files.txt
+project
+
+grep -i "project" all_files.txt
